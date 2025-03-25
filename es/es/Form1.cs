@@ -32,21 +32,22 @@ namespace es
         }
         string path = @"file.csv";
         partita[] part = new partita[1000];
+        int cont;
         public Form1()
         {
             
             InitializeComponent();
-            Array form = leggi_format();
-            int cont = par();
+            string[] form = leggi_format();
+            cont = par();
             display(cont);
         }
 
         private void display(int cont) 
         {
             lst_visualizza.Items.Clear();
-            for (int i = 0; i < cont; i++)
+            for (int i = 1; i < cont; i++)
             {
-                lst_visualizza.Items.Add(part[i + 1].);
+                lst_visualizza.Items.Add($"{part[i].squadra_casa.PadRight(30)} {part[i].squadra_tras.PadRight(30)} {part[i].gol_casa.ToString().PadRight(20)} {part[i].gol_tras.ToString().PadRight(20)}");
             }
         }
 
@@ -57,11 +58,10 @@ namespace es
                 int cont = 0;
                 while (!sr.EndOfStream) 
                 {
-                    string[] forms = new string[4];
-                    char sep = ',';
+                    char sep = ';';
                     string linea;
                     linea = sr.ReadLine();
-                    forms = linea.Split(sep);
+                    string[] forms = linea.Split(sep);
                     if (cont != 0)
                     {
                         string nome1;
@@ -73,27 +73,23 @@ namespace es
                         nome3 = int.Parse(forms[2]);
                         nome4 = int.Parse(forms[3]);
                         part[cont] = new partita(nome1, nome2, nome3, nome4);
-                        cont++;
-                    } else {
-                        MessageBox.Show("non va");
-                        cont++; 
                     }
+                    cont++;
                 }
                 return cont;
+
             }
         }
 
-        private Array leggi_format()
+        private string[] leggi_format()
         {
             try
             {
                 using (StreamReader sr = new StreamReader(path))
                 {
-                    string linea;
-                    string[] form = new string[4];
                     char sep = ';';
-                    linea = sr.ReadLine();
-                    form = linea.Split(sep);
+                    string linea = sr.ReadLine();
+                    string[] form = linea.Split(sep);
                     return form;
                 }
             } catch 
@@ -107,6 +103,22 @@ namespace es
 
         }
 
-        
+        private void btn_aggiungi_Click(object sender, EventArgs e)
+        {
+            string nome1 = txt_squadra_casa.Text;
+            string nome2 = txt_squadra_trasferta.Text;
+            int nome3 = int.Parse(txt_gol_casa.Text);
+            int nome4 = int.Parse(txt_gol_trasferta.Text);
+
+
+
+            part[cont] = new partita(nome1, nome2, nome3, nome4);
+            cont++;
+            display(cont);
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                sw.WriteLine($"{nome1};{nome2};{nome3};{nome4}");
+            }
+        }
     }
 }

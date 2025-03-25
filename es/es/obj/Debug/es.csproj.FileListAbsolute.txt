@@ -9,3 +9,13 @@ C:\Users\12999516\Desktop\micro_nation\es\es\obj\Debug\es.csproj.GenerateResourc
 C:\Users\12999516\Desktop\micro_nation\es\es\obj\Debug\es.csproj.CoreCompileInputs.cache
 C:\Users\12999516\Desktop\micro_nation\es\es\obj\Debug\es.exe
 C:\Users\12999516\Desktop\micro_nation\es\es\obj\Debug\es.pdb
+C:\Users\Sebastiano\Desktop\micro\micro\es\es\bin\Debug\es.exe.config
+C:\Users\Sebastiano\Desktop\micro\micro\es\es\bin\Debug\es.exe
+C:\Users\Sebastiano\Desktop\micro\micro\es\es\bin\Debug\es.pdb
+C:\Users\Sebastiano\Desktop\micro\micro\es\es\obj\Debug\es.csproj.AssemblyReference.cache
+C:\Users\Sebastiano\Desktop\micro\micro\es\es\obj\Debug\es.Form1.resources
+C:\Users\Sebastiano\Desktop\micro\micro\es\es\obj\Debug\es.Properties.Resources.resources
+C:\Users\Sebastiano\Desktop\micro\micro\es\es\obj\Debug\es.csproj.GenerateResource.cache
+C:\Users\Sebastiano\Desktop\micro\micro\es\es\obj\Debug\es.csproj.CoreCompileInputs.cache
+C:\Users\Sebastiano\Desktop\micro\micro\es\es\obj\Debug\es.exe
+C:\Users\Sebastiano\Desktop\micro\micro\es\es\obj\Debug\es.pdb
