@@ -30,6 +30,19 @@ namespace es
                 gol_tras = gtras;
             }
         }
+
+        struct squadra
+        {
+            public string sq;
+            public int gol;
+
+            public squadra(string scasa, int ggol)
+            {
+                sq = scasa;
+                gol = ggol;
+            }
+        }
+
         string path = @"file.csv";
         partita[] part = new partita[1000];
         int cont;
@@ -118,6 +131,60 @@ namespace es
             using (StreamWriter sw = File.AppendText(path))
             {
                 sw.WriteLine($"{nome1};{nome2};{nome3};{nome4}");
+            }
+        }
+
+        private void btn_totale_gol_Click(object sender, EventArgs e)
+        {
+            int gol = 0;
+            for (int i = 0; i < cont; i++) 
+            {
+                gol += part[i].gol_casa + part[i].gol_tras;
+            }
+            MessageBox.Show($"i gol segnati in totale nel campionato sono: {gol}");
+        }
+
+        private void btn_partita_piu_gol_Click(object sender, EventArgs e)
+        {
+            int[] gol = new int[1000];
+            int max = 0;
+            string sq_casa = "";
+            string sq_tras = "";
+            for (int i = 0; i < cont; i++)
+            {
+                gol[i] = part[i].gol_casa + part[i].gol_tras;
+            }
+
+            for (int i = 0; i < cont; i++)
+            {
+                if (gol[i] > max)
+                {
+                    max = gol[i];
+                    sq_casa = part[i].squadra_casa;
+                    sq_tras = part[i].squadra_tras;
+
+                }
+            }
+
+            MessageBox.Show($"la partita con il numero di gol massimi è {sq_casa} vs {sq_tras} con un totale di {max.ToString()} gol");
+        }
+
+        private void btn_squadra_max_Click(object sender, EventArgs e)
+        {
+            squadra[] squadra = new squadra[1000];
+            int cont = 0;
+            for (int i = 0; i < cont; i++)
+            {
+                for (int j = 0; j < cont; j++)
+                {
+                    if (part[i].squadra_casa == squadra[j].sq)
+                    {
+                        squadra[j].gol += part[i].gol_casa;
+                    } else if (part[i].squadra_casa == squadra[j].sq)
+                    {
+                        squadra[j].gol += part[i].gol_tras;
+                    }
+                }
             }
         }
     }
