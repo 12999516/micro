@@ -15,14 +15,14 @@ namespace es
 {
     public partial class Form1 : Form
     {
-        struct partita 
+        struct partita
         {
             public string squadra_casa;
             public string squadra_tras;
             public int gol_casa;
             public int gol_tras;
 
-            public partita(string scasa, string stras, int gcasa, int gtras) 
+            public partita(string scasa, string stras, int gcasa, int gtras)
             {
                 squadra_casa = scasa;
                 squadra_tras = stras;
@@ -48,14 +48,14 @@ namespace es
         int cont;
         public Form1()
         {
-            
+
             InitializeComponent();
             string[] form = leggi_format();
             cont = par();
             display(cont);
         }
 
-        private void display(int cont) 
+        private void display(int cont)
         {
             lst_visualizza.Items.Clear();
             for (int i = 1; i < cont; i++)
@@ -69,7 +69,7 @@ namespace es
             using (StreamReader sr = new StreamReader(path))
             {
                 int cont = 0;
-                while (!sr.EndOfStream) 
+                while (!sr.EndOfStream)
                 {
                     char sep = ';';
                     string linea;
@@ -105,7 +105,8 @@ namespace es
                     string[] form = linea.Split(sep);
                     return form;
                 }
-            } catch 
+            }
+            catch
             {
                 MessageBox.Show("è esploso tutto");
                 return null;
@@ -137,7 +138,7 @@ namespace es
         private void btn_totale_gol_Click(object sender, EventArgs e)
         {
             int gol = 0;
-            for (int i = 0; i < cont; i++) 
+            for (int i = 0; i < cont; i++)
             {
                 gol += part[i].gol_casa + part[i].gol_tras;
             }
@@ -172,20 +173,94 @@ namespace es
         private void btn_squadra_max_Click(object sender, EventArgs e)
         {
             squadra[] squadra = new squadra[1000];
-            int cont = 0;
+            int conty = 0;
+            string sq = "";
+            int max_gol = 0;
+
             for (int i = 0; i < cont; i++)
             {
-                for (int j = 0; j < cont; j++)
+                bool trovato_casa = false;
+                bool trovato_tras = false;
+                for (int j = 0; j < conty; j++)
                 {
                     if (part[i].squadra_casa == squadra[j].sq)
                     {
-                        squadra[j].gol += part[i].gol_casa;
-                    } else if (part[i].squadra_casa == squadra[j].sq)
-                    {
-                        squadra[j].gol += part[i].gol_tras;
+                        trovato_casa = true;
+                        squadra[conty].gol += part[i].gol_casa;
                     }
+                    
+                    if (part[i].squadra_tras == squadra[j].sq)
+                    {
+                        trovato_tras = true;
+                        squadra[conty].gol += part[i].gol_tras;
+                    }
+
+
+                }
+                if(!trovato_casa)
+                {
+                    squadra[conty] = new squadra(part[conty].squadra_casa, part[conty].gol_casa);
+                    conty++;
+                }
+                if (!trovato_tras)
+                {
+                    squadra[conty] = new squadra(part[conty].squadra_tras, part[conty].gol_tras);
+                    conty++;
                 }
             }
+            
+
+            for (int i = 0; i < cont; i++)
+            {
+                if (squadra[i].gol > max_gol)
+                {
+                    max_gol = squadra[i].gol;
+                    sq = squadra[i].sq;
+                }
+            }
+
+            MessageBox.Show($"la squadra con il maggior numero di gol è {sq} con un totale di {max_gol}");
+        }
+
+        private void btn_cerca_squadra_Click(object sender, EventArgs e)
+        {
+            Form2 f = new Form2();
+            int[] trov = new int[1000];
+            int conti = 0;
+            try
+            {
+                f.ShowDialog();
+                if (DialogResult == DialogResult.OK)
+                {
+                    MessageBox.Show("ok");
+                }
+
+                for (int i = 0; i < cont; i++)
+                {
+                    if (part[i].squadra_casa == f.testo || part[i].squadra_tras == f.testo)
+                    {
+                        trov[conti] = i;
+                        conti++;
+                    }
+                }
+
+                displaysq(trov, conti);
+
+            }
+            catch
+            {
+                MessageBox.Show("errore");
+            }
+        }
+
+        private void displaysq(int[] trov, int conti)
+        {
+            string output = "";
+            for (int i = 0; i < conti; i++)
+            {
+                output += $"{part[trov[i]].squadra_casa}, {part[trov[i]].squadra_tras}, {part[trov[i]].gol_casa}, {part[trov[i]].gol_tras} \n";
+            }
+            MessageBox.Show(output);
         }
     }
 }
